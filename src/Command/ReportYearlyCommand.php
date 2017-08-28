@@ -34,8 +34,6 @@ class ReportYearlyCommand extends ContainerAwareCommand
         /* TODO: add prompt for name asc-desc */
 
         $minMaxYear = $db->query('SELECT MIN(YEAR(date)) as min, MAX(YEAR(date)) as max from views')->fetchAll();
-        //var_dump($profiles);
-        //var_dump($minMaxYear);
         $minYear = $minMaxYear[0]['min'];
         $maxYear = $minMaxYear[0]['max'];
 
@@ -43,40 +41,27 @@ class ReportYearlyCommand extends ContainerAwareCommand
             $io->text("There is no data in views table.");
             exit();
         } 
-
-
-    
         
         for ($year=$minYear; $year <= $maxYear ; $year++) {
             $io->title($year);
-
             
             $views = $db->query("
                 SELECT v.profile_id, pr.profile_name AS name, MONTH(v.date) as month, YEAR(v.date), SUM(v.views) as views
                 FROM views as v 
-
                 LEFT JOIN `profiles` as pr ON v.profile_id = pr.profile_id
                 WHERE YEAR(v.date) = {$year}
                 GROUP BY YEAR(v.date), MONTH(v.date), v.profile_id, pr.profile_name
                 ORDER BY pr.profile_name ASC, MONTH(v.date) ASC"
             )->fetchAll();
 
-            //print_r($views);
-
             $name = NULL;
-            $dataForTable = array();
             $line = NULL;
+            $dataForTable = array();
             foreach ($views as $data) {
-                //print_r("{$data["name"]} ");
-                //print_r($dataForTable);
-                //print_r("{$name} ");
-                //print_r(isset($line));
                 if($data["name"] != $name) {
-                    //print_r("v fi \n");
                     $name = $data["name"];
                     
                     if(isset($line)) {
-                        //print_r("kle");
                         array_push($dataForTable, $line);
                     }
 
@@ -85,19 +70,11 @@ class ReportYearlyCommand extends ContainerAwareCommand
                     $line[$data["month"]] = $data["views"];
                     
                 } else {
-                    //print_r("expression \n");
                     $line[$data["month"]] = $data["views"];
                 }
             }
             array_push($dataForTable, $line);
-
-            //var_dump($data);
             $io->table($this->headline, $dataForTable);
-        }
-       
-        // Show data in a table - headers, data
-        //$io->table(['Profile'], $profiles);
-        
-
+        }     
     }
 }
