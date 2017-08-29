@@ -3,11 +3,38 @@ SOLUTION
 
 Estimation
 ----------
-Estimated: n hours
+Estimated: 8 hours
 
-Spent: x hours
+Spent: 10 hours
 
 
 Solution
 --------
-Comments on your solution
+
+The solution has been upgraded, so that user can see all year separetly. In addition he can choose which year he wants to see and if he want name sorted descending. 
+
+
+Technical Setup
+===============
+
+1. On the command prompt, run:
+
+    $> cd /path/to/the/test/folder
+    
+    $> vagrant up (this will provision database and install composer)
+
+    $> vagrant ssh 
+
+2. The code in test is mirrored to /vagrant inside virtual enviroment. If you test on Windows machine, then check that console file has Unix line endings, otherwise it will fail.
+
+3. Test everything.
+
+How to make it better:
+======================
+
+	- allow user to chose which year does he want to see (done for single year (1h)), should allow multiple years (2h)
+	- allow user to sort names DESC (done, 1h)
+	- allow user to export to csv or excel (4h)
+	- allow user to chose which months he want to see (2h)
+	- plot some data in histogram (2h)
+
