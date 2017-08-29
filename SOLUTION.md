@@ -17,6 +17,8 @@ The solution has been upgraded, so that user can see all year separetly. In addi
 Technical Setup
 ===============
 
+In Vagrant the following technologies are used: PHP 7, MySQL 5.7 and Ubuntu 16.04.
+
 1. On the command prompt, run:
 
     $> cd /path/to/the/test/folder
